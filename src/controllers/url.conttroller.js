@@ -62,6 +62,8 @@ export async function openUrlControl(req, res, next) {
         console.log(urls.rows)
         if (urls.rowCount > 0) {
             const url = urls.rows[0]
+            const visitCount = url.visitCount + 1
+            await db.query(`UPDATE urls SET "visitCount"=$1  WHERE "id" = $1;`, [visitCount])
             return res.status(201).send(url.url);
         } else {
             return res.status(401).send("Url does not exist");
@@ -89,9 +91,9 @@ export async function deleteUrlControl(req, res, next) {
                 const url = urls.rows[0]
 
                 if (user.id === url.userId)
-                
+
                     await db.query(`DELETE FROM urls WHERE id=$1;`, [id])
-                    return res.status(204).send("OK");
+                return res.status(204).send("OK");
             } else {
                 return res.status(404).send("Url does not exist");
             }
