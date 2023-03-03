@@ -68,3 +68,26 @@ export async function openUrlMiddle(req, res, next) {
 
     next()
 }
+
+export async function deleteUrlMiddle(req, res, next) {
+    const token = req.headers.authorization?.split('Bearer ')[1];
+    const id = Number(req.params.id)
+    console.log(typeof id)
+
+    try {
+        if (typeof id !== "number") {
+            return res.status(422).send("Há um erro com a id")
+        }
+        if (!token) {
+            return res.status(401).send('Authorization header is missing');
+        }
+    }
+    catch (error) {
+        console.error(error)
+        res.status(500).send("Houve um problema no servidor")
+    }
+
+    res.locals.id = id
+    res.locals.token = token
+    next()
+}
