@@ -51,8 +51,7 @@ export async function registerMiddleWare(req, res, next) {
 }
 
 export async function getUserMiddleWare(req, res, next) {
-    const token = req.headers.authorization?.split('Bearer ')[1];
-        
+    const token = req.headers.authorization?.split('Bearer ')[1]
     try {
         
         if (!token) {
@@ -63,6 +62,7 @@ export async function getUserMiddleWare(req, res, next) {
         console.error(error)
         res.status(500).send("Houve um problema no servidor")
     }
+
     res.locals.token = token
     next()
 }

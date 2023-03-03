@@ -9,7 +9,7 @@ export async function shortenUrlControl(req, res) {
 
     try {
         const users = await db.query(`SELECT * FROM users WHERE password = $1;`, [token])
-
+        
         if (users.rowCount > 0) {
 
             const shortUrl = nanoid(10);

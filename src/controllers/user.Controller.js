@@ -50,19 +50,36 @@ export async function signUp(req, res) {
     }
 }
 
-export async function deleteUserControl(req, res) {
+export async function getUserControl(req, res) {
     const token = res.locals.token
 
     try {
-        const users = await db.query(`SELECT * FROM users WHERE password = $1;`, [token])
+        console.log(token)
+        const users = await db.query(`SELECT * FROM users WHERE token = $1;`, [token])
+        console.log("oi")
         if (users.rowCount > 0) {
-            await db.query(`DELETE FROM users WHERE token=$1;`, [token])
-            return res.status(204).send("OK");
+            const user = users.rows[0]
+            const urls = await db.query(`SELECT * FROM urls WHERE "userId" = $1;`, [user.id])
+            const response = {
+                "id": user.id,
+                "name": user.name,
+                "visitCount": sumVisits(urls.rows),
+                "shortenedUrls": urls.rows
+            }
+            return res.status(200).send(response);
         } else {
-            return res.status(401).send('Authorization header is invalid');
+            return res.status(401).send('Auth is invalid');
         }
 
     } catch (error) {
         return res.send(error).status(500)
     }
+}
+
+function sumVisits(arr){
+    let sum = 0
+    for (let i = 0; i<arr.length; i++ ){
+        sum = sum + arr.visitCount
+    }
+    return sum
 }
