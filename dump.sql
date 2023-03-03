@@ -150,6 +150,9 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: urls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.urls VALUES (1, '2023-03-03 13:42:23.319945', 1, 0, 'HFLEFCx39j', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
+INSERT INTO public.urls VALUES (2, '2023-03-03 13:45:05.564086', 1, 0, 'W66Ka4nZ9s', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
+INSERT INTO public.urls VALUES (3, '2023-03-03 13:53:38.127831', 1, 0, 'xyME3E1x1M', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 
 
 --
@@ -173,7 +176,7 @@ SELECT pg_catalog.setval('public.sessions_id_seq', 1, false);
 -- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.urls_id_seq', 1, false);
+SELECT pg_catalog.setval('public.urls_id_seq', 3, true);
 
 
 --

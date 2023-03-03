@@ -26,3 +26,27 @@ export async function shortenUrlMiddle(req, res, next){
     next()
 
 }
+
+export async function getUrl(req, res, next){
+    
+   const id = req.params.id
+    
+
+    try {
+        if (typeof id !== "Number") {
+            return res.status(422).send("Há um erro com a url")
+        }
+        if (!token) {
+            return res.status(401).send('Authorization header is missing');
+          }
+    }
+    catch (error) {
+        console.error(error)
+        res.status(500).send("Houve um problema no servidor")
+    }
+  
+    res.locals.url = url.url
+    res.locals.token = token
+    next()
+
+}

@@ -5,5 +5,6 @@ import { shortenUrlControl } from "../controllers/url.conttroller.js"
 const urlRouter = Router()
 
 urlRouter.post('/urls/shorten', shortenUrlMiddle, shortenUrlControl)
+urlRouter.get(' /urls/:id', shortenUrlMiddle, shortenUrlControl)
 
 export default urlRouter
