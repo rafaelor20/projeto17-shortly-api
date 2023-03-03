@@ -15,6 +15,9 @@ export async function signIn(req, res) {
 
                 res.status(200).send({ token: token })
             }
+            else {
+                return res.status(401).send('Unauthorized')
+            }
         } else {
             return res.status(401).send('Unauthorized')
         }
