@@ -150,8 +150,6 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: urls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.urls VALUES (1, '2023-03-03 13:42:23.319945', 1, 0, 'HFLEFCx39j', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
-INSERT INTO public.urls VALUES (2, '2023-03-03 13:45:05.564086', 1, 0, 'W66Ka4nZ9s', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 INSERT INTO public.urls VALUES (3, '2023-03-03 13:53:38.127831', 1, 0, 'xyME3E1x1M', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 INSERT INTO public.urls VALUES (4, '2023-03-03 13:55:55.726411', 1, 0, 'AhD33Zh6DE', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 INSERT INTO public.urls VALUES (5, '2023-03-03 13:55:56.281878', 1, 0, 'XcL9gXqp9g', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
@@ -167,13 +165,11 @@ INSERT INTO public.urls VALUES (14, '2023-03-03 13:56:01.591302', 1, 0, '2lvzLM4
 INSERT INTO public.urls VALUES (15, '2023-03-03 13:56:02.249774', 1, 0, 'OPGunB2qQE', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 INSERT INTO public.urls VALUES (16, '2023-03-03 13:56:02.945906', 1, 0, '94GwqH9wvw', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 INSERT INTO public.urls VALUES (17, '2023-03-03 13:56:03.590471', 1, 0, '2Pq_yhEOAJ', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
-INSERT INTO public.urls VALUES (18, '2023-03-03 13:56:04.260419', 1, 0, 'um_CSUgXy_', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 INSERT INTO public.urls VALUES (19, '2023-03-03 13:56:04.945681', 1, 0, 'wmeCFUyaOw', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 INSERT INTO public.urls VALUES (20, '2023-03-03 13:56:05.712139', 1, 0, '_exWRsrN7j', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 INSERT INTO public.urls VALUES (21, '2023-03-03 13:56:06.44984', 1, 0, 'Qr_H-0MP7n', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 INSERT INTO public.urls VALUES (22, '2023-03-03 14:05:41.647769', 1, 0, 'LW0yGpDVlS', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 INSERT INTO public.urls VALUES (23, '2023-03-03 14:06:10.117597', 1, 0, 'RBQ4jCO-wS', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
-INSERT INTO public.urls VALUES (24, '2023-03-03 14:06:43.877486', 4, 0, 'yhmQeuo5Ve', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 INSERT INTO public.urls VALUES (25, '2023-03-03 14:06:44.541629', 4, 0, '0tCBaRIo89', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 INSERT INTO public.urls VALUES (26, '2023-03-03 14:06:45.186864', 4, 0, 'CTfmZ2fI5a', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 INSERT INTO public.urls VALUES (27, '2023-03-03 14:06:46.068313', 4, 0, 'Zwx74Ao-wK', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
@@ -191,6 +187,13 @@ INSERT INTO public.urls VALUES (38, '2023-03-03 14:17:46.204258', 4, 0, 'AnjbK1n
 INSERT INTO public.urls VALUES (39, '2023-03-03 14:17:59.876825', 4, 0, 'PufciybM4t', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 INSERT INTO public.urls VALUES (40, '2023-03-03 14:18:00.91469', 4, 0, 'sMims3W9Ra', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 INSERT INTO public.urls VALUES (41, '2023-03-03 14:34:59.870535', 4, 0, 'JZZ4TOh8ZC', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
+INSERT INTO public.urls VALUES (1, '2023-03-03 13:42:23.319945', 1, 1, 'HFLEFCx39j', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
+INSERT INTO public.urls VALUES (42, '2023-03-03 15:05:13.528278', 4, 0, 'Wz9ZhDi18y', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
+INSERT INTO public.urls VALUES (43, '2023-03-03 15:05:14.509539', 4, 0, 'HTacA1G9J-', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
+INSERT INTO public.urls VALUES (44, '2023-03-03 15:05:16.869663', 4, 0, 'AoDdQ8w5Yv', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
+INSERT INTO public.urls VALUES (45, '2023-03-03 17:06:27.161512', 4, 0, 'Mwtsr1JiRD', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
+INSERT INTO public.urls VALUES (2, '2023-03-03 13:45:05.564086', 1, 2, 'W66Ka4nZ9s', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
+INSERT INTO public.urls VALUES (18, '2023-03-03 13:56:04.260419', 1, 2, 'um_CSUgXy_', 'https://www.steamgifts.com/giveaways/search?type=wishlist');
 
 
 --
@@ -214,7 +217,7 @@ SELECT pg_catalog.setval('public.sessions_id_seq', 1, false);
 -- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.urls_id_seq', 41, true);
+SELECT pg_catalog.setval('public.urls_id_seq', 45, true);
 
 
 --

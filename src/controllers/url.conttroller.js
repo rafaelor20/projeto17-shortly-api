@@ -58,12 +58,12 @@ export async function openUrlControl(req, res, next) {
     const id = res.locals.id
 
     try {
-        const urls = await db.query(`SELECT * FROM urls WHERE "id" = $1;`, [id])
+        const urls = await db.query(`SELECT * FROM urls WHERE "shortUrl" = $1;`, [id])
         console.log(urls.rows)
         if (urls.rowCount > 0) {
             const url = urls.rows[0]
             const visitCount = url.visitCount + 1
-            await db.query(`UPDATE urls SET "visitCount"=$1  WHERE "id" = $1;`, [visitCount])
+            await db.query(`UPDATE urls SET "visitCount"=$1  WHERE "shortUrl" = $2;`, [visitCount, id])
             return res.status(201).send(url.url);
         } else {
             return res.status(401).send("Url does not exist");

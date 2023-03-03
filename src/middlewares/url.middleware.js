@@ -50,11 +50,10 @@ export async function getUrlMiddle(req, res, next) {
 
 export async function openUrlMiddle(req, res, next) {
 
-    const id = Number(req.params.shortUrl)
-    console.log(typeof id)
+    const id = req.params.shortUrl
 
     try {
-        if (typeof id !== "number") {
+        if (typeof id !== "string") {
             return res.status(422).send("Há um erro com a shortUrl")
         }
 

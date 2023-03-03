@@ -54,16 +54,17 @@ export async function getUserControl(req, res) {
     const token = res.locals.token
 
     try {
-        console.log(token)
+        
         const users = await db.query(`SELECT * FROM users WHERE password = $1;`, [token])
-        console.log("oi")
+        
         if (users.rowCount > 0) {
             const user = users.rows[0]
             const urls = await db.query(`SELECT * FROM urls WHERE "userId" = $1;`, [user.id])
+            const visitCount = await sumVisits(urls.rows)
             const response = {
                 "id": user.id,
                 "name": user.name,
-                "visitCount": sumVisits(urls.rows),
+                "visitCount": visitCount,
                 "shortenedUrls": urls.rows
             }
             return res.status(200).send(response);
