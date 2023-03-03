@@ -1,4 +1,4 @@
-import { customerSchema } from '../schema/customerSchema.js'
+import { customerSchema } from '../schemas/customerSchema.js'
 
 export function customerSchemaValidation(req, res, next) {
     const customer = {

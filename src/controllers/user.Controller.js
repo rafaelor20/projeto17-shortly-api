@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt'
 import { v4 as uuid } from 'uuid'
 import { db } from "../database/db.js";
 
-export async function signIn (request, response) {
+export async function signIn (req, res) {
 
     const signIn = res.locals.userSignIn
     
@@ -20,24 +20,27 @@ export async function signIn (request, response) {
     }
 }
 
-export async function signUp (request, response) {
+export async function signUp (req, res) {
     
     const signUp = res.locals.userSignUp
-
+    console.log(signUp)
     try {
-        const checkEmail = await db.query(`SELECT cpf FROM users WHERE cpf = $1;`, [signUp.email])
-
-        if (checkEmail){
+        
+        const checkEmail = await db.query(`SELECT email FROM users WHERE email = $1;`, [signUp.email])
+        
+        if (checkEmail.rowCount !== 0){
+            console.log("Já existe um usuário registrado com este email")
             res.status(409).send("Já existe um usuário registrado com este email")
         } else {
             const encriptPass = bcrypt.hashSync(signUp.password, 10)
-
+            console.log(typeof encriptPass)
+            console.log("else")
             await db.query(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3);`, [signUp.name, signUp.email, encriptPass])
 
-            return response.sendStatus(201)
+            return res.sendStatus(201)
         }        
 
     } catch(error) {
-        return response.send(error).status(500)
+        return res.send(error).status(500)
     }
 }

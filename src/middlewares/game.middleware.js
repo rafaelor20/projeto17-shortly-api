@@ -1,4 +1,4 @@
-import { gameSchema } from "../schema/gameSchema.js"
+import { gameSchema } from "../schemas/gameSchema.js"
 
 export function gameSchemaValidation(req, res, next) {
     const game = {

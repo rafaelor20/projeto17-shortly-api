@@ -1,5 +1,5 @@
 import {userSignUpSchema, userSignInSchema} from "../schemas/userSchema.js"
-import db from "../database/db.js"
+import { db } from "../database/db.js"
 
 export async function loginMiddleWare(request, response, next) {
 
@@ -26,7 +26,7 @@ export async function loginMiddleWare(request, response, next) {
     next()
 }
 
-export async function registerMiddleWare(request, response, next) {
+export async function registerMiddleWare(req, res, next) {
     
     const user = {
         name: req.body.name,
@@ -35,13 +35,12 @@ export async function registerMiddleWare(request, response, next) {
         confirmPassword: req.body.confirmPassword
     }
     
-    const error = userSignUpSchema.validate(user, { abortEarly: false })
-    
+    const {error} = userSignUpSchema.validate(user, { abortEarly: false })
 
     try {
         if (error) {
-            const errorMessages = error.details.map(detail => detail.message)
-            return res.status(400).send(errorMessages)
+            
+            return res.status(422).send("Há um erro com a info do usuário")
         }
     }
     catch (error) {
