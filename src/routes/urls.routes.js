@@ -6,5 +6,7 @@ const urlRouter = Router()
 
 urlRouter.post('/urls/shorten', shortenUrlMiddle, shortenUrlControl)
 urlRouter.get("/urls/:id", getUrlMiddle, getUrlControl)
+urlRouter.get("/urls/open/:shortUrl", getUrlMiddle, getUrlControl)
+
 
 export default urlRouter

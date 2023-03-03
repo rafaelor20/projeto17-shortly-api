@@ -10,7 +10,7 @@ export async function shortenUrlControl(req, res) {
     try {
         const users = await db.query(`SELECT * FROM users WHERE password = $1;`, [token])
 
-        if (users.rowCount === 1) {
+        if (users.rowCount > 0) {
 
             const shortUrl = nanoid(10);
 
@@ -42,6 +42,26 @@ export async function getUrlControl(req, res, next) {
         if (urls.rowCount > 0) {
             const url = urls.rows[0]
             return res.status(200).send(url);
+        } else {
+            return res.status(401).send("Url does not exist");
+        }
+
+    }
+    catch (error) {
+        console.error(error)
+        res.status(500).send("Houve um problema no servidor")
+    }
+}
+
+export async function openUrlControl(req, res, next) {
+
+    const id = res.locals.id
+
+    try {
+        const urls = await db.query(`SELECT * FROM urls WHERE id = $1;`, [id])
+        if (urls.rowCount > 0) {
+            const url = urls.rows[0]
+            return res.status(200).send(url.shortUrl);
         } else {
             return res.status(401).send("Url does not exist");
         }

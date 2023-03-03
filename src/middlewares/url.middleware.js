@@ -47,3 +47,24 @@ export async function getUrlMiddle(req, res, next){
     
     next()
 }
+
+export async function openUrlMiddle(req, res, next){
+    
+    const id = Number(req.params.id)
+     console.log(typeof id)
+ 
+     try {
+         if (typeof id !== "number") {
+             return res.status(422).send("Há um erro com a id")
+         }
+         
+     }
+     catch (error) {
+         console.error(error)
+         res.status(500).send("Houve um problema no servidor")
+     }
+   
+     res.locals.id = id
+     
+     next()
+ }
