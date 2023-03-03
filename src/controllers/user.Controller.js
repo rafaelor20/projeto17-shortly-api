@@ -55,7 +55,7 @@ export async function getUserControl(req, res) {
 
     try {
         console.log(token)
-        const users = await db.query(`SELECT * FROM users WHERE token = $1;`, [token])
+        const users = await db.query(`SELECT * FROM users WHERE password = $1;`, [token])
         console.log("oi")
         if (users.rowCount > 0) {
             const user = users.rows[0]
