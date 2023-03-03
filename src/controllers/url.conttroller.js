@@ -90,10 +90,14 @@ export async function deleteUrlControl(req, res, next) {
             if (urls.rowCount > 0) {
                 const url = urls.rows[0]
 
-                if (user.id === url.userId)
-
+                if (user.id === url.userId) {
                     await db.query(`DELETE FROM urls WHERE id=$1;`, [id])
-                return res.status(204).send("OK");
+                    return res.status(204).send("OK");
+                } else {
+                    return res.status(401).send('Authorization header is invalid');
+                }
+
+
             } else {
                 return res.status(404).send("Url does not exist");
             }

@@ -12,9 +12,7 @@ export async function shortenUrlMiddle(req, res, next) {
         if (error) {
             return res.status(422).send("Há um erro com a url")
         }
-        if (!token) {
-            return res.status(401).send('Authorization header is missing');
-        }
+        
     }
     catch (error) {
         console.error(error)

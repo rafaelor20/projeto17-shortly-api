@@ -49,3 +49,20 @@ export async function signUp(req, res) {
         return res.send(error).status(500)
     }
 }
+
+export async function deleteUserControl(req, res) {
+    const token = res.locals.token
+
+    try {
+        const users = await db.query(`SELECT * FROM users WHERE password = $1;`, [token])
+        if (users.rowCount > 0) {
+            await db.query(`DELETE FROM users WHERE token=$1;`, [token])
+            return res.status(204).send("OK");
+        } else {
+            return res.status(401).send('Authorization header is invalid');
+        }
+
+    } catch (error) {
+        return res.send(error).status(500)
+    }
+}

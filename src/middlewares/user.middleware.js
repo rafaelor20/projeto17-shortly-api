@@ -49,3 +49,20 @@ export async function registerMiddleWare(req, res, next) {
     res.locals.userSignUp = user
     next()
 }
+
+export async function getUserMiddleWare(req, res, next) {
+    const token = req.headers.authorization?.split('Bearer ')[1];
+        
+    try {
+        
+        if (!token) {
+            return res.status(401).send('Authorization header is missing');
+        }
+    }
+    catch (error) {
+        console.error(error)
+        res.status(500).send("Houve um problema no servidor")
+    }
+    res.locals.token = token
+    next()
+}
