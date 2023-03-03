@@ -58,6 +58,7 @@ ALTER SEQUENCE public.sessions_id_seq OWNED BY public.sessions.id;
 
 CREATE TABLE public.urls (
     id integer NOT NULL,
+    "createdAt" timestamp without time zone DEFAULT now(),
     "userId" integer,
     "visitCount" integer DEFAULT 0,
     "shortUrl" character varying(30),
@@ -93,7 +94,8 @@ CREATE TABLE public.users (
     id integer NOT NULL,
     name character varying(30) NOT NULL,
     email character varying(20),
-    password character varying(20)
+    password character varying(100),
+    "createdAt" timestamp without time zone DEFAULT now()
 );
 
 
@@ -154,6 +156,7 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.users VALUES (1, 'João', 'joao@driven.com.br', '$2b$10$NK2SmJOFHhNa84s1k2RQ1uvFVTygjdr2guE/AAYKUG9aYvE3J9kV6', '2023-03-03 10:00:23.957625');
 
 
 --
@@ -174,7 +177,7 @@ SELECT pg_catalog.setval('public.urls_id_seq', 1, false);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, false);
+SELECT pg_catalog.setval('public.users_id_seq', 1, true);
 
 
 --
