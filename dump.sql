@@ -61,8 +61,8 @@ CREATE TABLE public.urls (
     "createdAt" timestamp without time zone DEFAULT now(),
     "userId" integer,
     "visitCount" integer DEFAULT 0,
-    "shortUrl" character varying(30),
-    url character varying(80)
+    "shortUrl" character varying(255),
+    url character varying(255)
 );
 
 
@@ -92,9 +92,9 @@ ALTER SEQUENCE public.urls_id_seq OWNED BY public.urls.id;
 
 CREATE TABLE public.users (
     id integer NOT NULL,
-    name character varying(30) NOT NULL,
-    email character varying(20),
-    password character varying(100),
+    name character varying(255) NOT NULL,
+    email character varying(255),
+    password character varying(255),
     "createdAt" timestamp without time zone DEFAULT now()
 );
 
@@ -156,7 +156,10 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.users VALUES (1, 'João', 'joao@driven.com.br', '$2b$10$NK2SmJOFHhNa84s1k2RQ1uvFVTygjdr2guE/AAYKUG9aYvE3J9kV6', '2023-03-03 10:00:23.957625');
+INSERT INTO public.users VALUES (1, 'João', 'jo@driven.com.br', '$2b$10$cRGjUET7NNBxM.tPMyemy.TUALdHHHyrEkDip4d0yNl8GXc4DWYW.', '2023-03-03 10:41:07.756341');
+INSERT INTO public.users VALUES (2, 'João', 'joao@driven.com.br', '$2b$10$8.kMxOeFo9NyvEm9s9.oL.V.maKtBfyd2dL1TYr8bMRnWRyxtwAre', '2023-03-03 10:41:13.523581');
+INSERT INTO public.users VALUES (3, 'João', 'jodwewerfwerfweao@driven.com.br', '$2b$10$5d1X59XHDZ8iYP6KajXUS.tPevZQifusUYnEv4OcuE0qO9VEX2aE2', '2023-03-03 10:41:16.74712');
+INSERT INTO public.users VALUES (4, 'João', 'joao1234@driven.com.br', '$2b$10$BPO81ZtCd6bxISDLY/uiF.syOCGbVeQXTc6iOP6ydGDgJpknMMCzq', '2023-03-03 10:50:47.945954');
 
 
 --
@@ -177,7 +180,7 @@ SELECT pg_catalog.setval('public.urls_id_seq', 1, false);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, true);
+SELECT pg_catalog.setval('public.users_id_seq', 4, true);
 
 
 --
