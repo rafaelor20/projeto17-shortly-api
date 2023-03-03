@@ -21,7 +21,7 @@ export async function shortenUrlControl(req, res) {
                 id: idObject.rows[0].id,
                 shortUrl: shortUrl
             }
-            return res.status(201).send(response);
+            return res.status(200).send(response);
         } else {
             return res.status(401).send('Authorization header is invalid');
         }
@@ -56,12 +56,13 @@ export async function getUrlControl(req, res, next) {
 export async function openUrlControl(req, res, next) {
 
     const id = res.locals.id
-
+    
     try {
-        const urls = await db.query(`SELECT * FROM urls WHERE id = $1;`, [id])
+        const urls = await db.query(`SELECT * FROM urls WHERE "id" = $1;`, [id])
+        console.log(urls.rows)
         if (urls.rowCount > 0) {
             const url = urls.rows[0]
-            return res.status(200).send(url.shortUrl);
+            return res.status(200).send(url.url);
         } else {
             return res.status(401).send("Url does not exist");
         }
