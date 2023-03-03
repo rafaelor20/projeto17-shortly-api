@@ -28,7 +28,7 @@ export async function signUp (req, res) {
         
         const checkEmail = await db.query(`SELECT email FROM users WHERE email = $1;`, [signUp.email])
         
-        if (checkEmail.rowCount !== 0){
+        if (checkEmail.rowCount > 0){
             console.log("Já existe um usuário registrado com este email")
             res.status(409).send("Já existe um usuário registrado com este email")
         } else {
