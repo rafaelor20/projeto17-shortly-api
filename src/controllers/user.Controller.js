@@ -22,7 +22,7 @@ export async function signIn(req, res) {
             return res.status(401).send('Unauthorized')
         }
     } catch (error) {
-        return res.send(error).status(500)
+        return res.status(500).send(error)
     }
 }
 
@@ -46,7 +46,7 @@ export async function signUp(req, res) {
         }
 
     } catch (error) {
-        return res.send(error).status(500)
+        return res.status(500).send(error)
     }
 }
 
@@ -72,7 +72,7 @@ export async function getUserControl(req, res) {
         }
 
     } catch (error) {
-        return res.send(error).status(500)
+        return res.status(500).send(error)
     }
 }
 
