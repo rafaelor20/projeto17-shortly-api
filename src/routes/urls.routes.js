@@ -1,10 +1,10 @@
 import { Router } from "express"
-import { shortenUrlMiddle } from "../middlewares/url.middleware.js"
-import { shortenUrlControl } from "../controllers/url.conttroller.js"
+import { shortenUrlMiddle, getUrlMiddle } from "../middlewares/url.middleware.js"
+import { shortenUrlControl, getUrlControl } from "../controllers/url.conttroller.js"
 
 const urlRouter = Router()
 
 urlRouter.post('/urls/shorten', shortenUrlMiddle, shortenUrlControl)
-urlRouter.get(' /urls/:id', shortenUrlMiddle, shortenUrlControl)
+urlRouter.get("/urls/:id", getUrlMiddle, getUrlControl)
 
 export default urlRouter
