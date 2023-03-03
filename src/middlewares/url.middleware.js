@@ -1,16 +1,16 @@
-import { urlSchema } from "../schemas/urlSchema";
+import { urlSchema } from "../schemas/urlSchema.js";
 
 export async function shortenUrlMiddle(req, res, next){
-    const { headers } = req;
-    const token = headers.authorization?.split('Bearer ')[1];
-
-    const url = req.body.url
-
-    const {error} = urlSchema.validate(user, { abortEarly: false })
+    
+    const token = req.headers.authorization?.split('Bearer ')[1];
+    const url = {url: req.body.url}
+    
+    const {error} = urlSchema.validate(url, { abortEarly: false })
+    
 
     try {
         if (error) {
-            return res.status(422).send("Há um erro com a info do usuário")
+            return res.status(422).send("Há um erro com a url")
         }
         if (!token) {
             return res.status(401).send('Authorization header is missing');
@@ -21,8 +21,8 @@ export async function shortenUrlMiddle(req, res, next){
         res.status(500).send("Houve um problema no servidor")
     }
   
-    res.locals.url = url
-    res.locals.toekn = token
+    res.locals.url = url.url
+    res.locals.token = token
     next()
 
 }
