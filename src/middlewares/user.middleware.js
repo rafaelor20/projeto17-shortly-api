@@ -12,8 +12,7 @@ export async function loginMiddleWare(req, res, next) {
 
     try {
         if (error) {
-            const errorMessages = error.details.map(detail => detail.message)
-            return res.status(400).send(errorMessages)
+            return res.status(422).send("Há um erro com a info do usuário")
         }
     }
     catch (error) {
