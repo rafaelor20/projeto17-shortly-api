@@ -15,7 +15,7 @@ export async function shortenUrlControl(req, res) {
             const shortUrl = nanoid(10);
 
             await db.query(`INSERT INTO urls ("userId", "shortUrl", url) VALUES ($1, $2, $3);`, [users.rows[0].id, shortUrl, url])
-            const idObject = await db.query(`SELECT id FROM urls WHERE url = $1;`, [url])
+            const idObject = await db.query(`SELECT id FROM urls WHERE "shortUrl" = $1;`, [shortUrl])
 
             const response = {
                 id: idObject.rows[0].id,
