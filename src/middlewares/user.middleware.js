@@ -1,13 +1,13 @@
 import {userSignUpSchema, userSignInSchema} from "../schemas/userSchema.js"
 
-export async function loginMiddleWare(request, response, next) {
+export async function loginMiddleWare(req, res, next) {
 
     const user = {
         email: req.body.email,
         password: req.body.password
     }
     
-    const error = userSignInSchema.validate(user, { abortEarly: false })
+    const {error} = userSignInSchema.validate(user, { abortEarly: false })
     
 
     try {
