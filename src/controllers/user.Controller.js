@@ -8,14 +8,21 @@ export async function signIn(req, res) {
 
     try {
         const user = await db.query(`SELECT * FROM users WHERE email = $1;`, [signIn.email])
-        console.log(user)
-        if (user.rowCount !== 0) {
-            if (bcrypt.compareSync(signIn.password, user.rows[0].password)) {
+        
+        if (user.rowCount > 0) {
+            if ((signIn.password === user.rows[0].password)) {
                 const token = uuid()
-
+                await db.query(
+                    `
+                 INSERT INTO sessions (token, "userId") VALUES ($1, $2)`,
+                    [token, user.rows[0].id]
+                  );
                 res.status(200).send({ token: token })
             }
+            
             else {
+                console.log(signIn.password)
+                console.log(user.rows[0].password)
                 return res.status(401).send('Unauthorized')
             }
         } else {
@@ -38,9 +45,8 @@ export async function signUp(req, res) {
 
             res.status(409).send("Já existe um usuário registrado com este email")
         } else {
-            const encriptPass = bcrypt.hashSync(signUp.password, 10)
 
-            await db.query(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3);`, [signUp.name, signUp.email, encriptPass])
+            await db.query(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3);`, [signUp.name, signUp.email, signUp.password])
 
             return res.sendStatus(201)
         }
@@ -55,17 +61,21 @@ export async function getUserControl(req, res) {
 
     try {
         
-        const users = await db.query(`SELECT * FROM users WHERE password = $1;`, [token])
-        
-        if (users.rowCount > 0) {
+        const sessions = await db.query(`SELECT * FROM sessions WHERE token = $1;`, [token])
+        console.log(sessions.rows[0])
+        if (sessions.rowCount > 0) {
+            const session = sessions.rows[0]
+            const urls = await db.query(`SELECT * FROM urls WHERE "userId" = $1;`, [session.userId])
+            const users =  await db.query(`SELECT * FROM users WHERE id = $1;`, [session.userId])
             const user = users.rows[0]
-            const urls = await db.query(`SELECT * FROM urls WHERE "userId" = $1;`, [user.id])
-            const visitCount = await sumVisits(urls.rows)
+            
+            const visitCount = sumVisits(urls.rows)
+            const formatedUrls = formatUrls(urls.rows)
             const response = {
                 "id": user.id,
                 "name": user.name,
                 "visitCount": visitCount,
-                "shortenedUrls": urls.rows
+                "shortenedUrls": formatedUrls
             }
             return res.status(200).send(response);
         } else {
@@ -80,7 +90,20 @@ export async function getUserControl(req, res) {
 function sumVisits(arr){
     let sum = 0
     for (let i = 0; i<arr.length; i++ ){
-        sum = sum + arr.visitCount
+        sum = sum + arr[i].visitCount
     }
     return sum
+}
+
+function formatUrls(arr){
+    let lst = []
+    for (let i = 0; i<arr.length; i++ ){
+        lst.push({
+            id: arr[i].id,
+			shortUrl: arr[i].shortUrl,
+			url: arr[i].url,
+			visitCount: arr[i].visitCount
+        })
+    }
+    return lst
 }
