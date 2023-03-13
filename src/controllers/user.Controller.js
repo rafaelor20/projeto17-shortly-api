@@ -10,7 +10,7 @@ export async function signIn(req, res) {
         const user = await db.query(`SELECT * FROM users WHERE email = $1;`, [signIn.email])
         
         if (user.rowCount > 0) {
-            if ((signIn.password === user.rows[0].password)) {
+            if (bcrypt.compareSync(signIn.password, user.rows[0].password)) {
                 const token = uuid()
                 await db.query(
                     `
@@ -21,8 +21,6 @@ export async function signIn(req, res) {
             }
             
             else {
-                console.log(signIn.password)
-                console.log(user.rows[0].password)
                 return res.status(401).send('Unauthorized')
             }
         } else {
@@ -45,8 +43,8 @@ export async function signUp(req, res) {
 
             res.status(409).send("Já existe um usuário registrado com este email")
         } else {
-
-            await db.query(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3);`, [signUp.name, signUp.email, signUp.password])
+            const passwordHash = bcrypt.hashSync(signUp.password, 10)
+            await db.query(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3);`, [signUp.name, signUp.email, passwordHash])
 
             return res.sendStatus(201)
         }
