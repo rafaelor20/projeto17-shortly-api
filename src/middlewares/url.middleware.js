@@ -30,7 +30,7 @@ export async function shortenUrlMiddle(req, res, next) {
 export async function getUrlMiddle(req, res, next) {
 
     const id = Number(req.params.id)
-    console.log(typeof id)
+    
 
     try {
         if (typeof id !== "number") {
@@ -71,7 +71,6 @@ export async function openUrlMiddle(req, res, next) {
 export async function deleteUrlMiddle(req, res, next) {
     const token = req.headers.authorization?.split('Bearer ')[1];
     const id = Number(req.params.id)
-    console.log(typeof id)
 
     try {
         if (typeof id !== "number") {
@@ -82,7 +81,7 @@ export async function deleteUrlMiddle(req, res, next) {
         }
     }
     catch (error) {
-        console.error(error)
+        
         res.status(500).send("Houve um problema no servidor")
     }
 

@@ -8,20 +8,20 @@ export async function shortenUrlControl(req, res) {
     const url = res.locals.url
 
     try {
-        const users = await db.query(`SELECT * FROM users WHERE password = $1;`, [token])
+        const session = await db.query(`SELECT * FROM sessions WHERE token = $1;`, [token])
         
-        if (users.rowCount > 0) {
+        if (session.rowCount > 0) {
 
             const shortUrl = nanoid(10);
 
-            await db.query(`INSERT INTO urls ("userId", "shortUrl", url) VALUES ($1, $2, $3);`, [users.rows[0].id, shortUrl, url])
-            const idObject = await db.query(`SELECT id FROM urls WHERE "shortUrl" = $1;`, [shortUrl])
-
-            const response = {
-                id: idObject.rows[0].id,
+            const shortId = await db.query(`INSERT INTO urls ("userId", "shortUrl", url) VALUES ($1, $2, $3) RETURNING id;`, [session.rows[0].userId, shortUrl, url])
+            
+            console.log(shortId)
+            const data = {
+                id: shortId.rows[0].id,
                 shortUrl: shortUrl
             }
-            return res.status(201).send(response);
+            return res.status(201).send(data);
         } else {
             return res.status(401).send('Authorization header is invalid');
         }
@@ -43,7 +43,7 @@ export async function getUrlControl(req, res, next) {
             const url = urls.rows[0]
             return res.status(201).send(url);
         } else {
-            return res.status(401).send("Url does not exist");
+            return res.status(422).send("Url does not exist");
         }
 
     }
@@ -66,7 +66,7 @@ export async function openUrlControl(req, res, next) {
             await db.query(`UPDATE urls SET "visitCount"=$1  WHERE "shortUrl" = $2;`, [visitCount, id])
             return res.status(201).send(url.url);
         } else {
-            return res.status(401).send("Url does not exist");
+            return res.status(422).send("Url does not exist");
         }
 
     }
@@ -82,15 +82,15 @@ export async function deleteUrlControl(req, res, next) {
     const token = res.locals.token
     try {
 
-        const users = await db.query(`SELECT * FROM users WHERE password = $1;`, [token])
+        const sessions = await db.query(`SELECT * FROM sessions WHERE token = $1;`, [token])
 
-        if (users.rowCount > 0) {
-            const user = users.rows[0]
+        if (sessions.rowCount > 0) {
+            const session = sessions.rows[0]
             const urls = await db.query(`SELECT * FROM urls WHERE id = $1;`, [id])
             if (urls.rowCount > 0) {
                 const url = urls.rows[0]
 
-                if (user.id === url.userId) {
+                if (session.id === url.userId) {
                     await db.query(`DELETE FROM urls WHERE id=$1;`, [id])
                     return res.status(204).send("OK");
                 } else {
